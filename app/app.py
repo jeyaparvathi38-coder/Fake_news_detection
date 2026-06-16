@@ -15,6 +15,26 @@ app = Flask(__name__)
 HF_API_URL   = os.environ.get("HF_API_URL", "")
 HF_API_TOKEN = os.environ.get("HF_API_TOKEN", "")
 
+local_pipeline = None
+
+def get_local_pipeline():
+    global local_pipeline
+    if local_pipeline is None:
+        try:
+            from transformers import pipeline
+            model_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'distilbert_v2_indian_model')
+            if os.path.exists(model_path):
+                print(f"Loading local model from {model_path}...")
+                local_pipeline = pipeline("text-classification", model=model_path, tokenizer=model_path)
+                print("Local model loaded successfully.")
+            else:
+                print("Local model not found at", model_path)
+        except ImportError:
+            print("transformers library is not installed. Cannot load local model.")
+        except Exception as e:
+            print("Error loading local model:", e)
+    return local_pipeline
+
 def clean_text(text):
     text = str(text)
     text = re.sub(r"http\S+|www\S+", "", text)
@@ -100,6 +120,29 @@ def predict():
                 "top_negative": []
             })
 
+    # Try local model if API is not configured or failed
+    pipeline_fn = get_local_pipeline()
+    if pipeline_fn:
+        try:
+            out = pipeline_fn(cleaned, truncation=True, max_length=512)
+            label = out[0]['label']
+            score = out[0]['score']
+            result = "FAKE" if label == "LABEL_1" else "REAL"
+            confidence = round(score * 100, 2)
+            risk_level = ("High" if confidence > 80 else "Medium") if result == "FAKE" else "Low"
+            processing_time = round(time.time() - start_time, 2)
+            return jsonify({
+                "result": result,
+                "confidence": confidence,
+                "processing_time": processing_time,
+                "risk_level": risk_level,
+                "model_used": "Local DistilBERT (v2 Indian Dataset)",
+                "top_positive": [],
+                "top_negative": []
+            })
+        except Exception as e:
+            print("Local prediction error:", e)
+
     # Fallback: demo mode (no model configured)
     time.sleep(1.5)
     processing_time = round(time.time() - start_time, 2)
@@ -144,4 +187,4 @@ def notebook_stats():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host="0.0.0.0", port=port)
+    app.run(debug=True, use_reloader=False, host="0.0.0.0", port=port)
