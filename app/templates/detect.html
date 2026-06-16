@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Unique Background: Data Stream Grid -->
+<div class="bg-grid"></div>
+
+<section class="py-5 mt-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h2 class="gradient-text display-5 fw-bold mb-3">Detection Engine</h2>
+                    <p class="text-muted">Enter a news article or headline below to verify its authenticity using our state-of-the-art DistilBERT model.</p>
+                </div>
+                
+                <!-- Input Form -->
+                <div class="position-relative">
+                    <!-- Creative Floating Elements -->
+                    <div class="position-absolute top-0 start-0 translate-middle d-none d-md-block" style="z-index: 2; transform: translate(-30%, -30%) !important;">
+                        <span class="badge bg-success bg-opacity-25 text-success border border-success px-3 py-2 rounded-pill shadow-sm" style="animation: float 4s ease-in-out infinite;">✓ Real News</span>
+                    </div>
+                    <div class="position-absolute top-100 end-0 translate-middle d-none d-md-block" style="z-index: 2; transform: translate(30%, 30%) !important;">
+                        <span class="badge bg-danger bg-opacity-25 text-danger border border-danger px-3 py-2 rounded-pill shadow-sm" style="animation: float 5s ease-in-out infinite 1s;">✗ Fake News</span>
+                    </div>
+                    <div class="position-absolute top-50 start-100 translate-middle d-none d-lg-block" style="z-index: 2; transform: translate(50%, -50%) !important;">
+                        <span class="badge bg-info bg-opacity-25 text-info border border-info px-3 py-2 rounded-pill shadow-sm" style="animation: float 6s ease-in-out infinite 0.5s;">Analyzing Context...</span>
+                    </div>
+
+                    <div class="glass-card hover-glow p-4 p-md-5 mb-5 position-relative z-1" id="inputSection">
+                        <form id="detectionForm">
+                            <div class="mb-4 text-center">
+                                <label for="newsContent" class="form-label text-light fw-bold fs-4 mb-3">Paste the article content below:</label>
+                                <textarea class="form-control custom-input bg-darker text-light border-secondary" id="newsContent" rows="8" placeholder="e.g. BREAKING: Scientists have discovered a new species..." required style="font-size: 1.1rem; line-height: 1.6; border-radius: 12px;"></textarea>
+                            </div>
+                            
+                            <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg flex-grow-1 custom-btn pulse-btn py-3 fw-bold rounded-pill">
+                                    <i class="fa-solid fa-microchip me-2"></i>Analyze Authenticity
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary btn-lg custom-btn rounded-pill px-4" id="clearBtn">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Animation sequence container (Hidden by default) -->
+                <div id="animationSection" class="glass-card hover-glow p-5 mb-5 text-center d-none">
+                    <div id="aiScanningAnim" class="mb-4">
+                        <div class="scanner-container mx-auto">
+                            <div class="scanner-beam"></div>
+                            <i class="fa-solid fa-brain fa-4x text-primary pulse-icon"></i>
+                        </div>
+                    </div>
+                    <h3 id="animStepTitle" class="text-light mb-3">Initializing Detection Engine...</h3>
+                    <div class="progress custom-progress mb-3" style="height: 10px;">
+                        <div id="animProgressBar" class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <p id="animStepDesc" class="text-muted small">Loading neural network nodes...</p>
+                </div>
+
+                <!-- Result Section (Hidden by default) -->
+                <div id="resultSection" class="d-none">
+                    <!-- Final Result Card -->
+                    <div id="finalResultCard" class="glass-card hover-glow p-5 mb-4 text-center result-card-anim">
+                        <div id="resultIcon" class="mb-3">
+                            <!-- Filled dynamically -->
+                        </div>
+                        <h1 id="resultText" class="display-4 fw-bold mb-0">
+                            <!-- Filled dynamically -->
+                        </h1>
+                        <p id="riskText" class="mt-2 mb-0 fw-semibold text-uppercase letter-spacing-1">
+                            <!-- Filled dynamically -->
+                        </p>
+                    </div>
+                    
+                    <!-- Stats & Explainability Row -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="glass-card hover-glow p-4 h-100 fade-in-delay-1">
+                                <h5 class="text-light mb-4 border-bottom border-secondary pb-2"><i class="fa-solid fa-chart-pie me-2 text-primary"></i>Analysis Summary</h5>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between text-muted mb-1 small">
+                                        <span>Confidence Score</span>
+                                        <span id="confidenceValueText" class="fw-bold text-light">0%</span>
+                                    </div>
+                                    <div class="progress custom-progress">
+                                        <div id="confidenceBar" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                
+                                <ul class="list-unstyled mb-0 mt-4 text-light small">
+                                    <li class="mb-2 d-flex justify-content-between">
+                                        <span class="text-muted">Model Used:</span>
+                                        <span id="modelUsedText" class="fw-semibold">DistilBERT</span>
+                                    </li>
+                                    <li class="d-flex justify-content-between">
+                                        <span class="text-muted">Processing Time:</span>
+                                        <span id="processingTimeText" class="fw-semibold">0.00s</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="glass-card hover-glow p-4 h-100 fade-in-delay-2">
+                                <h5 class="text-light mb-4 border-bottom border-secondary pb-2"><i class="fa-solid fa-magnifying-glass-chart me-2 text-secondary"></i>Explainability</h5>
+                                
+                                <div class="mb-3">
+                                    <span class="badge bg-danger bg-opacity-25 text-danger border border-danger mb-2 d-inline-block px-3 py-2 w-100 text-start">
+                                        <i class="fa-solid fa-arrow-trend-down me-2"></i>Negative Factors (Fake Indicators)
+                                    </span>
+                                    <div id="negativeFactors" class="d-flex flex-wrap gap-2 keywords-container">
+                                        <!-- Filled dynamically -->
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <span class="badge bg-success bg-opacity-25 text-success border border-success mb-2 d-inline-block px-3 py-2 w-100 text-start">
+                                        <i class="fa-solid fa-arrow-trend-up me-2"></i>Positive Factors (Real Indicators)
+                                    </span>
+                                    <div id="positiveFactors" class="d-flex flex-wrap gap-2 keywords-container">
+                                        <!-- Filled dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="text-center mt-5 fade-in-delay-3">
+                        <button class="btn btn-primary custom-btn me-3" id="analyzeAnotherBtn">
+                            <i class="fa-solid fa-rotate-right me-2"></i>Analyze Another
+                        </button>
+                        <button class="btn btn-outline-light custom-btn outline-glow" onclick="window.print()">
+                            <i class="fa-solid fa-file-pdf me-2"></i>Export Report
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+{% endblock %}

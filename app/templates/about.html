@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Unique Background: Floating Data Nodes (From Model Insights) -->
+<div class="bg-nodes-container">
+    <div class="bg-node" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+    <div class="bg-node" style="top: 20%; left: 85%; animation-delay: 2s;"></div>
+    <div class="bg-node" style="top: 80%; left: 20%; animation-delay: 4s;"></div>
+    <div class="bg-node" style="top: 70%; left: 75%; animation-delay: 1s;"></div>
+    <div class="bg-node" style="top: 40%; left: 40%; animation-delay: 3s;"></div>
+    <div class="bg-node" style="top: 60%; left: 10%; animation-delay: 5s;"></div>
+    <div class="bg-node" style="top: 15%; left: 60%; animation-delay: 2.5s;"></div>
+    <div class="bg-node" style="top: 85%; left: 55%; animation-delay: 1.5s;"></div>
+    <div class="bg-node" style="top: 50%; left: 90%; animation-delay: 4.5s;"></div>
+    <div class="bg-node" style="top: 30%; left: 5%; animation-delay: 0.5s;"></div>
+</div>
+
+<style>
+/* Forcing Orbital CSS directly to bypass any browser cache issues */
+.orbital-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orbital-core {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(0,0,0,0.8) 80%);
+    border: 3px solid var(--warning);
+    border-radius: 50%;
+    color: var(--warning);
+    z-index: 10;
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), inset 0 0 20px rgba(245, 158, 11, 0.3);
+    animation: pulseCore 3s infinite alternate;
+}
+
+.orbital-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    border-radius: 50%;
+    border: 1px dashed rgba(245, 158, 11, 0.3);
+    transform: translate(-50%, -50%);
+}
+
+.ring-1 { width: 220px; height: 220px; }
+.ring-2 { 
+    width: 340px; 
+    height: 340px; 
+    border: 1px dashed rgba(139, 92, 246, 0.4); 
+    transition: all 0.3s ease; 
+}
+.ring-2:hover {
+    border-color: rgba(139, 92, 246, 0.9);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.5), inset 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.badge-hover-effect {
+    transition: all 0.3s ease;
+    cursor: default;
+}
+.badge-hover-effect:hover {
+    background: rgba(59, 130, 246, 0.15) !important;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px);
+}
+
+.orbital-node {
+    position: absolute;
+    top: 50%; left: 50%;
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-weight: 700;
+}
+
+.inner-node {
+    width: 55px; height: 55px;
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    color: var(--warning);
+    font-size: 0.85rem;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.outer-node {
+    width: 45px; height: 45px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+}
+
+.r1-n1 { animation: orbitR1_0 25s linear infinite; }
+.r1-n2 { animation: orbitR1_72 25s linear infinite; }
+.r1-n3 { animation: orbitR1_144 25s linear infinite; }
+.r1-n4 { animation: orbitR1_216 25s linear infinite; }
+.r1-n5 { animation: orbitR1_288 25s linear infinite; }
+
+@keyframes orbitR1_0 {
+    from { transform: translate(-50%, -50%) rotate(0deg) translateY(-110px) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(-360deg) translateY(-110px) rotate(360deg); }
+}
+@keyframes orbitR1_72 {
+    from { transform: translate(-50%, -50%) rotate(-72deg) translateY(-110px) rotate(72deg); }
+    to { transform: translate(-50%, -50%) rotate(-432deg) translateY(-110px) rotate(432deg); }
+}
+@keyframes orbitR1_144 {
+    from { transform: translate(-50%, -50%) rotate(-144deg) translateY(-110px) rotate(144deg); }
+    to { transform: translate(-50%, -50%) rotate(-504deg) translateY(-110px) rotate(504deg); }
+}
+@keyframes orbitR1_216 {
+    from { transform: translate(-50%, -50%) rotate(-216deg) translateY(-110px) rotate(216deg); }
+    to { transform: translate(-50%, -50%) rotate(-576deg) translateY(-110px) rotate(576deg); }
+}
+@keyframes orbitR1_288 {
+    from { transform: translate(-50%, -50%) rotate(-288deg) translateY(-110px) rotate(288deg); }
+    to { transform: translate(-50%, -50%) rotate(-648deg) translateY(-110px) rotate(648deg); }
+}
+
+.r2-n1 { animation: orbitR2_0 35s linear infinite; }
+.r2-n2 { animation: orbitR2_72 35s linear infinite; }
+.r2-n3 { animation: orbitR2_144 35s linear infinite; }
+.r2-n4 { animation: orbitR2_216 35s linear infinite; }
+.r2-n5 { animation: orbitR2_288 35s linear infinite; }
+
+@keyframes orbitR2_0 {
+    from { transform: translate(-50%, -50%) rotate(0deg) translateY(-170px) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg) translateY(-170px) rotate(-360deg); }
+}
+@keyframes orbitR2_72 {
+    from { transform: translate(-50%, -50%) rotate(72deg) translateY(-170px) rotate(-72deg); }
+    to { transform: translate(-50%, -50%) rotate(432deg) translateY(-170px) rotate(-432deg); }
+}
+@keyframes orbitR2_144 {
+    from { transform: translate(-50%, -50%) rotate(144deg) translateY(-170px) rotate(-144deg); }
+    to { transform: translate(-50%, -50%) rotate(504deg) translateY(-170px) rotate(-504deg); }
+}
+@keyframes orbitR2_216 {
+    from { transform: translate(-50%, -50%) rotate(216deg) translateY(-170px) rotate(-216deg); }
+    to { transform: translate(-50%, -50%) rotate(576deg) translateY(-170px) rotate(-576deg); }
+}
+@keyframes orbitR2_288 {
+    from { transform: translate(-50%, -50%) rotate(288deg) translateY(-170px) rotate(-288deg); }
+    to { transform: translate(-50%, -50%) rotate(648deg) translateY(-170px) rotate(-648deg); }
+}
+
+@keyframes pulseCore {
+    0% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.4), inset 0 0 10px rgba(245, 158, 11, 0.2); }
+    100% { box-shadow: 0 0 45px rgba(245, 158, 11, 0.7), inset 0 0 25px rgba(245, 158, 11, 0.5); transform: scale(1.02); }
+}
+</style>
+
+<section class="py-5 mt-4 min-vh-100 d-flex align-items-center position-relative z-1">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            
+            <!-- Left Side: Orbital Animation -->
+            <div class="col-lg-6 text-center position-relative fade-in-delay-1" style="min-height: 400px;">
+                <div class="orbital-container mx-auto">
+                    
+                    <!-- Central Core -->
+                    <div class="orbital-core d-flex flex-column align-items-center justify-content-center" style="border-color: var(--primary); color: var(--primary); box-shadow: 0 0 25px rgba(59, 130, 246, 0.5), inset 0 0 20px rgba(59, 130, 246, 0.3);">
+                        <i class="fa-solid fa-layer-group mb-1 fa-lg"></i>
+                        <span class="fw-bold tracking-widest text-uppercase small">BERT</span>
+                    </div>
+
+                    <!-- Inner Ring -->
+                    <div class="orbital-ring ring-1">
+                        <div class="orbital-node inner-node r1-n1" style="border-color: var(--primary); color: var(--primary); box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);">CLS</div>
+                        <div class="orbital-node inner-node r1-n2" style="border-color: var(--success); color: var(--success); box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);">FFN</div>
+                        <div class="orbital-node inner-node r1-n3" style="border-color: var(--info); color: var(--info); box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);">TOK</div>
+                        <div class="orbital-node inner-node r1-n4" style="border-color: var(--warning); color: var(--warning); box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);">ATT</div>
+                        <div class="orbital-node inner-node r1-n5" style="border-color: var(--secondary); color: var(--secondary); box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);">EMB</div>
+                    </div>
+
+                    <!-- Outer Ring -->
+                    <div class="orbital-ring ring-2">
+                        <div class="orbital-node outer-node r2-n1" style="color: var(--primary); border-color: rgba(59, 130, 246, 0.4);">DL</div>
+                        <div class="orbital-node outer-node r2-n2" style="color: var(--success); border-color: rgba(16, 185, 129, 0.4);">TF</div>
+                        <div class="orbital-node outer-node r2-n3" style="color: var(--info); border-color: rgba(14, 165, 233, 0.4);">NLP</div>
+                        <div class="orbital-node outer-node r2-n4" style="color: var(--warning); border-color: rgba(245, 158, 11, 0.4);">AI</div>
+                        <div class="orbital-node outer-node r2-n5" style="color: var(--secondary); border-color: rgba(139, 92, 246, 0.4);">ML</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Side: Text Content -->
+            <div class="col-lg-6 fade-in-delay-2">
+                <div class="glass-card hover-glow p-4 p-md-5">
+                    <div class="mb-4">
+                        <span class="badge border border-primary text-primary bg-transparent rounded-pill px-3 py-2 mb-4 tracking-widest text-uppercase badge-hover-effect" style="font-size: 0.75rem;">
+                            Behind The Scenes
+                        </span>
+                        <h1 class="display-4 fw-bolder text-light mb-4">
+                            The Core Engine
+                        </h1>
+                    </div>
+                    
+                    <p class="text-muted lead mb-4" style="line-height: 1.8; font-size: 1.1rem;">
+                        At the heart of NewsShield is a state-of-the-art <strong>DistilBERT Transformer</strong>. This isn't just a simple keyword matcher; it's a deep neural network capable of reading news articles exactly like a human does—understanding context, sarcasm, and sentence structure.
+                    </p>
+                    
+                    <p class="text-muted lead mb-4" style="line-height: 1.8; font-size: 1.1rem;">
+                        When you submit an article, the model first cleans the raw text, breaking it down into mathematical tokens. Then, its <strong>Self-Attention layers</strong> scan every word simultaneously to find hidden deceptive linguistic patterns that are invisible to the naked eye.
+                    </p>
+
+                    <p class="text-muted lead mb-0" style="line-height: 1.8; font-size: 1.1rem;">
+                        Trained specifically on an extensive <strong>Indian Fake News Database</strong> containing over 40,000 verified articles, the model achieves a staggering <strong>99.9% accuracy</strong> in separating truth from misinformation.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

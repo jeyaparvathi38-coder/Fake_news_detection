@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Unique Background: Floating Data Nodes -->
+<div class="bg-nodes-container">
+    <div class="bg-node" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+    <div class="bg-node" style="top: 20%; left: 85%; animation-delay: 2s;"></div>
+    <div class="bg-node" style="top: 80%; left: 20%; animation-delay: 4s;"></div>
+    <div class="bg-node" style="top: 70%; left: 75%; animation-delay: 1s;"></div>
+    <div class="bg-node" style="top: 40%; left: 40%; animation-delay: 3s;"></div>
+    <div class="bg-node" style="top: 60%; left: 10%; animation-delay: 5s;"></div>
+    <div class="bg-node" style="top: 15%; left: 60%; animation-delay: 2.5s;"></div>
+    <div class="bg-node" style="top: 85%; left: 55%; animation-delay: 1.5s;"></div>
+    <div class="bg-node" style="top: 50%; left: 90%; animation-delay: 4.5s;"></div>
+    <div class="bg-node" style="top: 30%; left: 5%; animation-delay: 0.5s;"></div>
+</div>
+
+<section class="py-5 mt-4">
+    <div class="container py-5">
+        <h2 class="text-center mb-5 gradient-text display-5 fw-bold">Model Insights</h2>
+        
+        <div class="row g-5">
+            <!-- Dataset Info -->
+            <div class="col-lg-6">
+                <h3 class="mb-4 text-light"><i class="fa-solid fa-database me-2 text-primary"></i>Dataset Overview</h3>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="glass-card hover-glow p-3 text-center stat-card h-100">
+                            <h5 class="text-muted">Total Records</h5>
+                            <h2 class="counter text-light" data-target="41336">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="glass-card hover-glow p-3 text-center stat-card h-100">
+                            <h5 class="text-muted">Features Used</h5>
+                            <h2 class="counter text-primary" data-target="2">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="glass-card hover-glow p-3 text-center stat-card border-success border-opacity-25 h-100">
+                            <h5 class="text-muted">Real News</h5>
+                            <h2 class="counter text-success" data-target="21576">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="glass-card hover-glow p-3 text-center stat-card border-danger border-opacity-25 h-100">
+                            <h5 class="text-muted">Fake News</h5>
+                            <h2 class="counter text-danger" data-target="19760">0</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Model Performance -->
+            <div class="col-lg-6">
+                <h3 class="mb-4 text-light"><i class="fa-solid fa-gauge-high me-2 text-secondary"></i>Model Performance</h3>
+                <div class="glass-card hover-glow p-4 h-100">
+                    <p class="text-muted mb-4">Performance metrics from DistilBERT model trained on our combined dataset.</p>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Accuracy</span>
+                            <span class="text-primary fw-bold">99.90%</span>
+                        </div>
+                        <div class="progress custom-progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" data-width="99.90%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Precision</span>
+                            <span class="text-info fw-bold">99.82%</span>
+                        </div>
+                        <div class="progress custom-progress" style="height: 10px;">
+                            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" data-width="99.82%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Recall</span>
+                            <span class="text-success fw-bold">99.97%</span>
+                        </div>
+                        <div class="progress custom-progress" style="height: 10px;">
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" data-width="99.97%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>F1 Score</span>
+                            <span class="text-warning fw-bold">99.89%</span>
+                        </div>
+                        <div class="progress custom-progress" style="height: 10px;">
+                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" data-width="99.89%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row g-4 mt-5 pt-4">
+            <div class="col-md-6 col-lg-6">
+                <!-- Chart: Real vs Fake Distribution -->
+                <div class="glass-card hover-glow p-3 h-100">
+                    <h6 class="text-muted text-center mb-3">Label Distribution</h6>
+                    <div style="height: 300px;">
+                        <canvas id="datasetChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <!-- Chart: Confusion Matrix -->
+                <div class="glass-card hover-glow p-3 h-100">
+                    <h6 class="text-muted text-center mb-3">Confusion Matrix</h6>
+                    <div style="height: 300px;">
+                        <canvas id="confusionMatrixChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <!-- Chart: Performance Comparison -->
+                <div class="glass-card hover-glow p-3 h-100">
+                    <h6 class="text-muted text-center mb-3">Metric Comparison</h6>
+                    <div style="height: 300px;">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <!-- Chart: Training Progress -->
+                <div class="glass-card hover-glow p-3 h-100">
+                    <h6 class="text-muted text-center mb-3">Training vs Val Loss</h6>
+                    <div style="height: 300px;">
+                        <canvas id="trainingLossChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

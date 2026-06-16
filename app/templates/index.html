@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center d-flex align-items-center justify-content-center">
+    <div class="container hero-content">
+        <div class="glow-orb"></div>
+        <h1 class="display-3 fw-bold mb-4 gradient-text typing-container">
+            <span class="typing-text">Fake News Detection</span>
+        </h1>
+        <p class="lead mb-5 text-light opacity-75 mx-auto" style="max-width: 700px;">
+            Uncover the truth behind every headline with advanced AI, machine learning, and intelligent credibility analysis.
+        </p>
+        <div class="d-flex justify-content-center gap-4">
+            <a href="{{ url_for('detect') }}" class="btn btn-primary btn-lg custom-btn pulse-btn">
+                <i class="fa-solid fa-magnifying-glass me-2"></i>Analyze News
+            </a>
+            <a href="{{ url_for('insights') }}" class="btn btn-outline-light btn-lg custom-btn outline-glow">
+                <i class="fa-solid fa-chart-line me-2"></i>View Statistics
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5" id="how-it-works">
+    <div class="container py-5">
+        <h2 class="text-center mb-5 gradient-text">How It Works</h2>
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <div class="glass-card hover-glow p-4 h-100">
+                    <div class="icon-wrapper mb-3 text-primary">
+                        <i class="fa-regular fa-keyboard fa-3x"></i>
+                    </div>
+                    <h4>1. Enter News</h4>
+                    <p class="text-muted text-sm">Input the news article or headline you want to verify.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card hover-glow p-4 h-100">
+                    <div class="icon-wrapper mb-3 text-secondary">
+                        <i class="fa-solid fa-microchip fa-3x"></i>
+                    </div>
+                    <h4>2. Processing</h4>
+                    <p class="text-muted text-sm">Our engine cleans and processes the text using NLP.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card hover-glow p-4 h-100">
+                    <div class="icon-wrapper mb-3 text-info">
+                        <i class="fa-solid fa-network-wired fa-3x"></i>
+                    </div>
+                    <h4>3. ML Prediction</h4>
+                    <p class="text-muted text-sm">The DistilBERT model analyzes linguistic patterns.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card hover-glow p-4 h-100">
+                    <div class="icon-wrapper mb-3 text-success">
+                        <i class="fa-solid fa-shield-check fa-3x"></i>
+                    </div>
+                    <h4>4. Final Result</h4>
+                    <p class="text-muted text-sm">Receive a detailed authenticity report and confidence score.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

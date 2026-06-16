@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Unique Background: Morphing Aurora -->
+<div class="bg-aurora-container">
+    <div class="bg-aurora-blob blob-1"></div>
+    <div class="bg-aurora-blob blob-2"></div>
+    <div class="bg-aurora-blob blob-3"></div>
+</div>
+
+<section class="py-5 mt-4 overflow-hidden">
+    <div class="container position-relative z-1">
+
+        <div class="text-center mb-5 fade-in-up">
+            <span class="badge bg-primary bg-opacity-25 text-primary border border-primary mb-3 px-3 py-2 rounded-pill shadow-sm">Detection Methodology</span>
+            <h2 class="display-4 fw-bolder text-light mb-3">The Anatomy of <span class="gradient-text">Verification</span></h2>
+            <p class="text-muted mx-auto lead" style="max-width: 700px;">Explore the complete workflow that converts news content into accurate credibility and authenticity assessments.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Vertical Timeline -->
+                <div class="position-relative py-4" id="timeline-container">
+                    <!-- Central Line -->
+                    <div class="position-absolute top-0 bottom-0 start-50 translate-middle-x bg-secondary bg-opacity-50" style="width: 2px; z-index: 0;"></div>
+
+                    <!-- Step 1 -->
+                    <div class="row align-items-center mb-5 position-relative z-1 reveal delay-1">
+                        <div class="col-md-5 text-md-end text-center mb-4 mb-md-0">
+                            <h3 class="text-light fw-bold">1. Preprocessing</h3>
+                            <p class="text-muted">The raw article is stripped of URLs, special characters, and extra spaces to ensure the model focuses purely on linguistic content.</p>
+                        </div>
+                        <div class="col-md-2 text-center d-none d-md-block">
+                            <div class="rounded-circle bg-darker border border-secondary d-flex align-items-center justify-content-center mx-auto shadow-lg" style="width: 60px; height: 60px; z-index: 2; position: relative;">
+                                <i class="fa-solid fa-broom text-secondary fa-xl"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="glass-card hover-glow p-3 border-secondary border-opacity-50 font-monospace text-sm text-muted">
+                                <del class="text-danger">https://fake.news</del> BREAKING:   New   discovery! <br/>
+                                <i class="fa-solid fa-arrow-down text-secondary my-2"></i><br/>
+                                <span class="text-success">BREAKING: New discovery!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="row align-items-center mb-5 position-relative z-1 reveal delay-2">
+                        <div class="col-md-5 order-md-3 text-md-start text-center mb-4 mb-md-0">
+                            <h3 class="text-info fw-bold">2. Subword Tokenization</h3>
+                            <p class="text-muted">DistilBERT breaks down words into subwords and maps them to high-dimensional mathematical vectors, adding a special <code class="text-info">[CLS]</code> token.</p>
+                        </div>
+                        <div class="col-md-2 order-md-2 text-center d-none d-md-block">
+                            <div class="rounded-circle bg-darker border border-info d-flex align-items-center justify-content-center mx-auto shadow-lg" style="width: 60px; height: 60px; z-index: 2; position: relative; box-shadow: 0 0 20px rgba(13, 202, 240, 0.2) !important;">
+                                <i class="fa-solid fa-code text-info fa-xl"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-5 order-md-1">
+                            <div class="glass-card hover-glow p-3 border-info border-opacity-25 font-monospace text-sm text-center">
+                                <span class="badge bg-info text-dark">[CLS]</span> 
+                                <span class="badge bg-dark border border-secondary text-muted">BREAK</span>
+                                <span class="badge bg-dark border border-secondary text-muted">##ING</span>
+                                <span class="badge bg-dark border border-secondary text-muted">:</span>
+                                <span class="badge bg-dark border border-secondary text-muted">New</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="row align-items-center mb-5 position-relative z-1 reveal delay-3">
+                        <div class="col-md-5 text-md-end text-center mb-4 mb-md-0">
+                            <h3 class="text-primary fw-bold">3. Self-Attention Analysis</h3>
+                            <p class="text-muted">The neural network layers analyze how every word relates to every other word simultaneously, detecting subtle deceptive patterns.</p>
+                        </div>
+                        <div class="col-md-2 text-center d-none d-md-block">
+                            <div class="rounded-circle bg-darker border border-primary d-flex align-items-center justify-content-center mx-auto shadow-lg" style="width: 60px; height: 60px; z-index: 2; position: relative; box-shadow: 0 0 20px rgba(13, 110, 253, 0.3) !important;">
+                                <i class="fa-solid fa-network-wired text-primary fa-xl"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="glass-card hover-glow p-4 text-center border-primary border-opacity-25">
+                                <div class="spinner-grow text-primary mb-2" role="status" style="width: 3rem; height: 3rem; animation-duration: 2s;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mb-0 text-primary small fw-bold tracking-widest text-uppercase">Processing 6 Transformer Layers</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="row align-items-center position-relative z-1 reveal delay-4">
+                        <div class="col-md-5 order-md-3 text-md-start text-center mb-4 mb-md-0">
+                            <h3 class="text-success fw-bold">4. Final Classification</h3>
+                            <p class="text-muted">A Softmax function compresses the mathematical output into a final percentage, classifying the article as Real or Fake News.</p>
+                        </div>
+                        <div class="col-md-2 order-md-2 text-center d-none d-md-block">
+                            <div class="rounded-circle bg-darker border border-success d-flex align-items-center justify-content-center mx-auto shadow-lg" style="width: 60px; height: 60px; z-index: 2; position: relative; box-shadow: 0 0 20px rgba(25, 135, 84, 0.3) !important;">
+                                <i class="fa-solid fa-check-double text-success fa-xl"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-5 order-md-1">
+                            <div class="glass-card hover-glow p-4 text-center border-success border-opacity-50" style="background: linear-gradient(145deg, rgba(25,135,84,0.1) 0%, rgba(0,0,0,0) 100%);">
+                                <h2 class="display-5 fw-bold text-success mb-0">99.8%</h2>
+                                <span class="text-muted small text-uppercase tracking-widest">Confidence Score</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Intersection Observer for scroll animations
+    document.addEventListener("DOMContentLoaded", function() {
+        const revealEls = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { 
+                    e.target.classList.add('visible'); 
+                    e.target.classList.add('fade-in-up');
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        revealEls.forEach(el => revealObserver.observe(el));
+    });
+</script>
+{% endblock %}
